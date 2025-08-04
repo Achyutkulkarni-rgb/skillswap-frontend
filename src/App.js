@@ -75,7 +75,7 @@ function App() {
       skills_want: form.skills_want.split(",").map((s) => s.trim()),
     };
     try {
-      await axios.post("http://localhost:5000/api/register", data);
+      await axios.post("https://skillswap-backend-012c.onrender.com/api/register", data);
       alert("Registered successfully!");
     } catch (err) {
       alert("User already exists or error during registration.");
@@ -84,10 +84,10 @@ function App() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/login", {
-        email: form.email,
-        password: form.password,
-      });
+      const res = await axios.post("https://skillswap-backend-012c.onrender.com/api/login", {
+  email: form.email,
+  password: form.password,
+});
       setToken(res.data.token);
       setIsLoggedIn(true);
       setShowMatchesPage(true);
@@ -124,9 +124,9 @@ function App() {
     };
 
     try {
-      const res = await axios.post("http://localhost:5000/api/match", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await axios.post("https://skillswap-backend-012c.onrender.com/api/match", data, {
+  headers: {
+    Authorization: `Bearer ${token}`,
         },
       });
       setMatches(res.data);
