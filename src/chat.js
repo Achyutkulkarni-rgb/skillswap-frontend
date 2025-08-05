@@ -1,9 +1,8 @@
-// src/components/ChatPage.js
-
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("https://skillswap-backend-012c.onrender.com/"); // Change to your backend URL if deployed
+// Replace this URL with your deployed backend
+const socket = io("https://skillswap-backend-012c.onrender.com/");
 
 const ChatPage = () => {
   const [message, setMessage] = useState("");
@@ -11,11 +10,16 @@ const ChatPage = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
+    // Listen for incoming messages
     socket.on("receive_message", (data) => {
       setMessages((prevMessages) => [...prevMessages, data]);
     });
 
-    return () => socket.disconnect();
+    // Cleanup on unmount
+    return () => {
+      socket.off("receive_message");
+      socket.disconnect();
+    };
   }, []);
 
   const sendMessage = () => {
@@ -28,13 +32,16 @@ const ChatPage = () => {
   return (
     <div style={styles.chatContainer}>
       <h1 style={styles.heading}>💬 Real-Time Dev Chat</h1>
+
       {!username ? (
         <div style={styles.inputWrapper}>
           <input
             style={styles.input}
             type="text"
             placeholder="Enter your name..."
-            onKeyDown={(e) => e.key === "Enter" && setUsername(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") setUsername(e.target.value.trim());
+            }}
           />
         </div>
       ) : (
@@ -47,6 +54,7 @@ const ChatPage = () => {
               </div>
             ))}
           </div>
+
           <div style={styles.inputWrapper}>
             <input
               style={styles.input}
@@ -54,7 +62,9 @@ const ChatPage = () => {
               value={message}
               placeholder="Type a message..."
               onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") sendMessage();
+              }}
             />
             <button style={styles.button} onClick={sendMessage}>
               Send
