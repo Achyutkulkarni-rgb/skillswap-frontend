@@ -1,7 +1,9 @@
+// ✅ Your imports
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Chat from "./chat";
 
-// Animated background styles for login and match pages
+// ✅ Your styles and keyframes (unchanged)
 const loginPageStyle = {
   minHeight: '100vh',
   display: 'flex',
@@ -20,7 +22,6 @@ const matchPageStyle = {
   backgroundSize: '400% 400%',
 };
 
-// Keyframe animations
 const gradientAnimation = `
   @keyframes gradientLogin {
     0% {background-position: 0% 50%;}
@@ -35,6 +36,7 @@ const gradientAnimation = `
 `;
 
 function App() {
+  // ✅ Your state variables (unchanged)
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -48,7 +50,10 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
   const [showMatchesPage, setShowMatchesPage] = useState(false);
 
-  // Inject global styles
+  // ✅ 🔥 New chat page state
+  const [showChatPage, setShowChatPage] = useState(false);
+
+  // ✅ Global style injection (unchanged)
   useEffect(() => {
     const styleTag = document.createElement('style');
     styleTag.innerHTML = gradientAnimation;
@@ -85,9 +90,9 @@ function App() {
   const handleLogin = async () => {
     try {
       const res = await axios.post("https://skillswap-backend-012c.onrender.com/api/login", {
-  email: form.email,
-  password: form.password,
-});
+        email: form.email,
+        password: form.password,
+      });
       setToken(res.data.token);
       setIsLoggedIn(true);
       setShowMatchesPage(true);
@@ -125,8 +130,8 @@ function App() {
 
     try {
       const res = await axios.post("https://skillswap-backend-012c.onrender.com/api/match", data, {
-  headers: {
-    Authorization: `Bearer ${token}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
       setMatches(res.data);
@@ -136,7 +141,12 @@ function App() {
     }
   };
 
-  // Matches Page
+  // ✅ 🔥 Show Chat Page
+  if (isLoggedIn && showChatPage) {
+    return <Chat currentUser={form} />;
+  }
+
+  // ✅ Matches Page
   if (isLoggedIn && showMatchesPage) {
     return (
       <div style={matchPageStyle}>
@@ -148,6 +158,9 @@ function App() {
             </button>
             <button onClick={handleMatch} style={{ padding: "10px 16px", backgroundColor: "#27ae60", color: "white", border: "none", borderRadius: 6 }}>
               Refresh Matches
+            </button>
+            <button onClick={() => setShowChatPage(true)} style={{ padding: "10px 16px", backgroundColor: "#8e44ad", color: "white", border: "none", borderRadius: 6 }}>
+              Open Chat 💬
             </button>
           </div>
 
@@ -193,7 +206,7 @@ function App() {
     );
   }
 
-  // Login/Register Page
+  // ✅ Login/Register Page
   return (
     <div style={loginPageStyle}>
       <div style={{ maxWidth: 500, margin: "auto", padding: 30, fontFamily: "Segoe UI", backgroundColor: "rgba(255,255,255,0.9)", borderRadius: 12 }}>
