@@ -115,4 +115,4 @@ const styles = {
   },
 };
 
-export default chatPage;
+export default ChatPage;
