@@ -1,7 +1,8 @@
 // ✅ Your imports
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ChatPage from './chat';
+import ChatPage from "./chat";
+
 
 const loginPageStyle = {
   minHeight: '100vh',
