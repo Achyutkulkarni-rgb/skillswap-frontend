@@ -1,8 +1,7 @@
 // ✅ Your imports
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ChatPage from "./chat";
-
+import ChatPage from "./chat"; // ✅ Correct import (make sure chat.js is in src/)
 
 const loginPageStyle = {
   minHeight: '100vh',
@@ -36,7 +35,6 @@ const gradientAnimation = `
 `;
 
 function App() {
-  // ✅ Your state variables (unchanged)
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -49,11 +47,8 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
   const [showMatchesPage, setShowMatchesPage] = useState(false);
+  const [showChatPage, setShowChatPage] = useState(false); // ✅ Chat state
 
-  // ✅ 🔥 New chat page state
-  const [showChatPage, setShowChatPage] = useState(false);
-
-  // ✅ Global style injection (unchanged)
   useEffect(() => {
     const styleTag = document.createElement('style');
     styleTag.innerHTML = gradientAnimation;
@@ -141,7 +136,7 @@ function App() {
     }
   };
 
-  // ✅ 🔥 Show Chat Page
+  // ✅ Show Chat Page
   if (isLoggedIn && showChatPage) {
     return <ChatPage currentUser={form} />;
   }
