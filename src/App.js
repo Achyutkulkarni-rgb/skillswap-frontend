@@ -1,7 +1,8 @@
 // ✅ Your imports
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Chat from "./components/Chat";
+import ChatPage from "./components/Chat"; // ✅ Correct
+
 
 
 // ✅ Your styles and keyframes (unchanged)
@@ -144,7 +145,7 @@ function App() {
 
   // ✅ 🔥 Show Chat Page
   if (isLoggedIn && showChatPage) {
-    return <Chat currentUser={form} />;
+    return <ChatPage currentUser={form} />;
   }
 
   // ✅ Matches Page
