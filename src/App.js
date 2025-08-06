@@ -1,11 +1,8 @@
 // ✅ Your imports
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ChatPage from "./components/Chat"; // ✅ Correct
+import ChatPage from './chat';
 
-
-
-// ✅ Your styles and keyframes (unchanged)
 const loginPageStyle = {
   minHeight: '100vh',
   display: 'flex',
